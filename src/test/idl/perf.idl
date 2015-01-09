@@ -1,0 +1,27 @@
+
+module org
+{
+    module jacorb
+    {
+        module performance
+        {
+            typedef sequence<octet> octetseq;
+
+            struct Data {
+                octetseq bytes;
+                string name;
+            };
+            typedef sequence<Data> DataSeq;
+
+
+            interface Hello
+            {
+                void inputString(in string s1);
+                void inputData(in DataSeq ds1);
+
+                void sayHello();
+                void sayGoodbye();
+            };
+        };
+    };
+};
