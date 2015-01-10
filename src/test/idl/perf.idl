@@ -16,7 +16,7 @@ module org
 
             interface Hello
             {
-                void inputString(in string s1);
+                long inputString(in string s1);
                 void inputData(in DataSeq ds1);
 
                 void sayHello();

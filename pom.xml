@@ -13,12 +13,15 @@
 
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-
         <surefire.forkCount>1</surefire.forkCount>
-        <jub.consumers>CONSOLE,H2</jub.consumers>
-        <jub.db.file>${basedir}/data/benchmarks</jub.db.file>
 
-        <jacorb.version>3.5</jacorb.version>
+        <jacorb.version>3.6-SNAPSHOT</jacorb.version>
+
+        <jub.consumers>CONSOLE,H2</jub.consumers>
+        <jub.xml.file>${basedir}/data/benchmarks.xml</jub.xml.file>
+        <jub.db.file>${basedir}/data/benchmarks</jub.db.file>
+        <jub.customkey>${jacorb.version}</jub.customkey>
+
     </properties>
 
     <dependencies>
@@ -36,12 +39,12 @@
         <dependency>
             <groupId>org.jacorb</groupId>
             <artifactId>jacorb-omgapi</artifactId>
-            <version>3.5</version>
+            <version>${jacorb.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jacorb</groupId>
             <artifactId>jacorb-idl-compiler</artifactId>
-            <version>3.5</version>
+            <version>${jacorb.version}</version>
         </dependency>
         <dependency>
             <groupId>com.carrotsearch</groupId>
@@ -73,7 +76,7 @@
                         <dependency>
                             <groupId>org.jacorb</groupId>
                             <artifactId>jacorb-idl-compiler</artifactId>
-                            <version>3.5</version>
+                            <version>${jacorb.version}</version>
                         </dependency>
                     </dependencies>
                 <executions>
@@ -138,7 +141,11 @@
                             <reuseForks>false</reuseForks>
                             <argLine>
                                 -Xbootclasspath/p:${settings.localRepository}/org/jacorb/jacorb-omgapi/${project.version}/jacorb-omgapi-${project.version}.jar
-                                -Djacorb.test.verbose=${jacorb.test.verbose} -Djub.consumers=${jub.consumers} -Djub.db.file=${jub.db.file}
+                                -Djacorb.test.verbose=${jacorb.test.verbose}
+                                -Djub.consumers=${jub.consumers}
+                                -Djub.db.file=${jub.db.file}
+                                -Djub.xml.file=${jub.xml.file}
+                                -Djub.customkey=${jub.customkey}
                             </argLine>
                         </configuration>
                     </execution>

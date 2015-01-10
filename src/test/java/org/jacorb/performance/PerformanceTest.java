@@ -2,22 +2,27 @@ package org.jacorb.performance;
 
 import com.carrotsearch.junitbenchmarks.BenchmarkOptions;
 import com.carrotsearch.junitbenchmarks.BenchmarkRule;
+import com.carrotsearch.junitbenchmarks.Clock;
 import com.carrotsearch.junitbenchmarks.annotation.AxisRange;
+import com.carrotsearch.junitbenchmarks.annotation.BenchmarkHistoryChart;
 import com.carrotsearch.junitbenchmarks.annotation.BenchmarkMethodChart;
+import com.carrotsearch.junitbenchmarks.annotation.LabelType;
 import org.jacorb.test.harness.ClientServerSetup;
 import org.jacorb.test.harness.ClientServerTestCase;
 import org.jacorb.test.harness.ORBTestCase;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.TestRule;
 
 import java.util.Properties;
 
-@AxisRange(min = 0, max = 1.0)
+@AxisRange(min = 0.0, max = 0.1)
 @BenchmarkMethodChart(filePrefix = "benchmark-lists")
+@BenchmarkHistoryChart(labelWith = LabelType.CUSTOM_KEY, filePrefix =  "benchmark")
 public final class PerformanceTest extends ClientServerTestCase
 {
+    private static final int BENCHMARK_LOOP = 20;
+    private static final int METHOD_LOOP = 3000;
+
     private static final String bigString;
     private static final Data[] bigData = new Data[2];
 
@@ -82,44 +87,62 @@ public final class PerformanceTest extends ClientServerTestCase
     }
 
     @Test
-    @BenchmarkOptions(benchmarkRounds = 20000, warmupRounds = 1)
+    @BenchmarkOptions(clock = Clock.NANO_TIME, benchmarkRounds = BENCHMARK_LOOP, warmupRounds = 1)
     public void testSayHello()
     {
-        server.sayHello();
+        for ( int i = 0 ; i < METHOD_LOOP; i++ )
+        {
+            server.sayHello();
+        }
     }
 
     @Test
-    @BenchmarkOptions(benchmarkRounds = 20000, warmupRounds = 1)
+    @BenchmarkOptions(clock = Clock.NANO_TIME, benchmarkRounds = BENCHMARK_LOOP, warmupRounds = 1)
     public void testString()
     {
-        server.inputString(bigString);
+        for ( int i = 0 ; i < METHOD_LOOP; i++ )
+        {
+            server.inputString(bigString);
+        }
     }
 
     @Test
-    @BenchmarkOptions(benchmarkRounds = 20000, warmupRounds = 1)
+    @BenchmarkOptions(clock = Clock.NANO_TIME, benchmarkRounds = BENCHMARK_LOOP, warmupRounds = 1)
     public void testOctet()
     {
-        server.inputData(bigData);
+        for ( int i = 0 ; i < METHOD_LOOP; i++ )
+        {
+            server.inputData(bigData);
+        }
     }
 
     @Test
-    @BenchmarkOptions(benchmarkRounds = 20000, warmupRounds = 1)
+    @BenchmarkOptions(clock = Clock.NANO_TIME, benchmarkRounds = BENCHMARK_LOOP, warmupRounds = 1)
     public void testSayHelloNoDeferred()
     {
-        serverNoDeferred.sayHello();
+        for ( int i = 0 ; i < METHOD_LOOP; i++ )
+        {
+            serverNoDeferred.sayHello();
+        }
     }
 
     @Test
-    @BenchmarkOptions(benchmarkRounds = 20000, warmupRounds = 1)
+    @BenchmarkOptions(clock = Clock.NANO_TIME, benchmarkRounds = BENCHMARK_LOOP, warmupRounds = 1)
     public void testStringNoDeferred()
     {
-        serverNoDeferred.inputString(bigString);
+        for ( int i = 0 ; i < METHOD_LOOP; i++ )
+        {
+            serverNoDeferred.inputString(bigString);
+        }
     }
 
     @Test
-    @BenchmarkOptions(benchmarkRounds = 20000, warmupRounds = 1)
+    @BenchmarkOptions(clock = Clock.NANO_TIME, benchmarkRounds = BENCHMARK_LOOP, warmupRounds = 1)
     public void testOctetNoDeferred()
     {
-        serverNoDeferred.inputData(bigData);
+        for ( int i = 0 ; i < METHOD_LOOP; i++ )
+        {
+            serverNoDeferred.inputData(bigData);
+        }
     }
 }

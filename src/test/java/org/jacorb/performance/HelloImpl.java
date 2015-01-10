@@ -1,13 +1,11 @@
 package org.jacorb.performance;
 
-import org.jacorb.test.harness.TestUtils;
-
 public final class HelloImpl extends HelloPOA
 {
     @Override
-    public void inputString(String s1)
+    public int inputString(String s1)
     {
-
+        return (s1.length());
     }
 
     @Override
@@ -25,8 +23,6 @@ public final class HelloImpl extends HelloPOA
     @Override
     public void sayGoodbye()
     {
-        String bye = "Good Bye, World!";
-        TestUtils.getLogger().debug(bye);
-    }
 
+    }
 }
